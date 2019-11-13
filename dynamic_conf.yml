@@ -1,0 +1,46 @@
+## dynamic configuration ##
+
+# This still under construction.
+
+http:
+
+  middlewares:
+    stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/ratel/"
+    stripprefix2:
+      stripPrefix:
+        prefixes:
+          - "/dgraph/"
+
+  routers:
+
+    ratel:
+      rule: "Host(`localhost`) && Path(`/ratel/`)"
+      service: dgraph-ratel
+      middlewares:
+      - stripprefix
+
+    dgraphHTTP:
+      rule: "Host(`localhost`)"
+      service: dgraph-HTTP
+      middlewares:
+      - stripprefix2
+
+  services:
+
+    dgraph-ratel:
+      loadBalancer:
+        servers:
+        - url: http://localhost:8000
+    dgraph-HTTP:
+      loadBalancer:
+        servers:
+        - url: http://localhost:8081
+        - url: http://localhost:8082
+        - url: http://localhost:8083
+        - url: http://localhost:8084
+        - url: http://localhost:8085
+        - url: http://localhost:8086
+
