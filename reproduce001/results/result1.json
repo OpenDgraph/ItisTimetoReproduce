@@ -1,0 +1,44 @@
+{
+  "data": {
+    "q": [
+      {
+        "email": "testAddress1@gmail.com"
+      },
+      {
+        "email": "testAddress2@gmail.com"
+      },
+      {
+        "email": "testaddress3@gmail.com"
+      }
+    ],
+    "result": [
+      {
+        "email": "testAddress1@gmail.com"
+      },
+      {
+        "email": "testAddress2@gmail.com"
+      }
+    ],
+    "result2": [
+      {
+        "email": "testaddress3@gmail.com"
+      }
+    ],
+    "result3": [
+      {
+        "email": "testaddress3@gmail.com"
+      }
+    ]
+  },
+  "extensions": {
+    "server_latency": {
+      "parsing_ns": 52272,
+      "processing_ns": 4179127,
+      "encoding_ns": 28186,
+      "assign_timestamp_ns": 427754
+    },
+    "txn": {
+      "start_ts": 5
+    }
+  }
+}
