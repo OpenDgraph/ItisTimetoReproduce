@@ -20,12 +20,6 @@ To Download Dgraph's binaries and use locally with multiple instances.
 
 ---
 #### Use:
-> `sh ./dgraph.sh`
-
-To Download Dgraph's binaries and use locally.
-
----
-#### Use:
 
 > `sh ./jaeger.sh`
 
