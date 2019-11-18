@@ -1,3 +1,4 @@
 /dgraph/**
 /traefik/**
+/jaeger/**
 .DS_Store

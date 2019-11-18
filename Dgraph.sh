@@ -99,6 +99,26 @@ if [ "$1" = "-ma" ] || [ "$1" = "--multiple" ]
     exit 0
   fi
 
+if [ "$1" = "-maj" ] || [ "$1" = "--multiplej" ]
+  then
+    echo "Starting multiple Alphas.."
+    cd dgraph
+    ./dgraph zero --cwd=./ --my=localhost:5080 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph zero --cwd=./ --my=localhost:5082 --peer=localhost:5080 -w=zw2 -o=2 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph zero --cwd=./ --my=localhost:5083 --peer=localhost:5080 -w=zw3 -o=3 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph zero --cwd=./ --my=localhost:5084 --peer=localhost:5080 -w=zw4 -o=4 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph zero --cwd=./ --my=localhost:5085 --peer=localhost:5080 -w=zw5 -o=5 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph zero --cwd=./ --my=localhost:5086 --peer=localhost:5080 -w=zw6 -o=6 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7081 -o=1 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7082 -o=2 -w=wall2 -p=post2 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7083 -o=3 -w=wall3 -p=post3 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7084 -o=4 -w=wall4 -p=post4 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7085 -o=5 -w=wall5 -p=post5 --jaeger.collector=http://localhost:14268 & \
+    ./dgraph alpha --cwd=./ --lru_mb 8000 --my=localhost:7086 -o=6 -w=wall6 -p=post6 --jaeger.collector=http://localhost:14268
+    echo "Done! exiting..."
+    exit 0
+  fi
+
 startLocally
 
   echo "just exited..."
