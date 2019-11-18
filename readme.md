@@ -52,7 +52,9 @@ To start some script created for testing purposes.
 Attempt to reproduce a issue with Regex. It has been found that there is a issue with Regex in versions prior to 1.1.0 that have already been fixed in Master branch.
 
 You need to:
+
 1 - install Dgraph locally.
+
 2 - Run `start.sh`.
 
 ## Reproduce 002
@@ -60,8 +62,11 @@ You need to:
 It is an attempt to verify the effectiveness of Traefik's load balancing via HTTP/1/2. I obtained positive results. However, I was not able to properly work load balancing via GRPC. It works, but it doesn't balances.
 
 You need to:
+
 1 - install Dgraph locally with multiple Alphas.
+
 2 - install and config Traefik.
+
 3 - Run `mutations.sh`.
 
 ## Reproduce 003
@@ -71,8 +76,11 @@ This is a proof of GRPC load balancing operation on NGINX.
 It works, but I'm not sure if the load balancing is well balanced. It sends calls to all Alphas listed in `upstream grpcservers`. But I noticed that two (or three) instances seem to get more calls (However all instances receive calls). Because the memory and processing are bigger in them. This does not happen in Traefik.
 
 You need to:
+
 1 - install Dgraph locally with multiple Alphas.
+
 2 - install and config NGINX.
+
 3 - install and run the grpc_client.
 
 ## Links
