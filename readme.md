@@ -49,7 +49,7 @@ To start some script created for testing purposes.
 
 ## Reproduce 001
 
-Attempt to reproduce a issue with Regex. It has been found that there is a issue with Regex in versions prior to 1.1.0 that have already been fixed in Master branch.
+Attempt to reproduce an issue with Regex. It has been found that there is an issue with Regex in versions prior to 1.1.0 that have already been fixed in Master branch.
 
 You need to:
 
