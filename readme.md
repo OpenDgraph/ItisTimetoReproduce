@@ -47,7 +47,7 @@ To start some script created for testing purposes.
 
 # About the Reproduce directories
 
-## Rreproduce 001
+## Reproduce 001
 
 Attempt to reproduce a issue with Regex. It has been found that there is a issue with Regex in versions prior to 1.1.0 that have already been fixed in Master branch.
 
