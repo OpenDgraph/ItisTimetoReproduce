@@ -13,8 +13,18 @@ http:
       stripPrefix:
         prefixes:
           - "/dgraph/"
+    grpcfix:
+      stripPrefix:
+        prefixes:
+          - "/grpc/"
 
   routers:
+
+    routerGrpc:
+      rule: "Host(`www.local.dgraph.com`) && Path(`/grpc/`)"
+      service: dgraph-grpc
+      middlewares:
+      - grpcfix
 
     ratel:
       rule: "Host(`localhost`) && Path(`/ratel/`)"
@@ -30,10 +40,21 @@ http:
 
   services:
 
+    dgraph-grpc:
+      loadBalancer:
+        servers:
+        - url: h2c://localhost:9081
+        - url: h2c://localhost:9082
+        - url: h2c://localhost:9083
+        - url: h2c://localhost:9084
+        - url: h2c://localhost:9085
+        - url: h2c://localhost:9086
+
     dgraph-ratel:
       loadBalancer:
         servers:
         - url: http://localhost:8000
+
     dgraph-HTTP:
       loadBalancer:
         servers:
