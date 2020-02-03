@@ -2,6 +2,6 @@
   "name": "simple",
   "dependencies": {
     "dgraph-js": "^2.0.2",
-    "grpc": "^1.23.3"
+    "grpc": "^1.24.2"
   }
 }

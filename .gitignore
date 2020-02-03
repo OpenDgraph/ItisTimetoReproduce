@@ -1,5 +1,6 @@
 /dgraph/**
 /traefik/**
 /jaeger/**
+node_modules
 .DS_Store
 reproduce005/dgraph/**
