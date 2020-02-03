@@ -1,0 +1,21 @@
+upsert {
+  query {
+    var(func: has(properties)) @filter(eq(type,"node") ){
+      v as uid
+      properties {
+        Props as uid
+      }
+    }
+    var(func: uid(Props)) {
+      delProps as uid
+    }
+
+  }
+
+  mutation {
+    delete {
+       uid(v) <properties> * .
+      uid(delProps) * * .
+    }
+  }
+}

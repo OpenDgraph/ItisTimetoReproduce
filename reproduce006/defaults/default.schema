@@ -1,0 +1,24 @@
+type node {
+  migrationDone
+}
+
+type relationship {
+  migrationDone
+}
+
+<born>: int .
+<end>: uid @reverse .
+<id>: string @index(hash) .
+<label>: string @index(hash) .
+<labels>: [string] @index(hash) .
+<migrationDone>: default .
+<name>: string .
+<properties>: uid @reverse .
+<rating>: int .
+<released>: int .
+<roles>: [string] .
+<start>: uid @reverse .
+<summary>: string .
+<tagline>: string .
+<title>: string .
+<type>: string @index(hash) .

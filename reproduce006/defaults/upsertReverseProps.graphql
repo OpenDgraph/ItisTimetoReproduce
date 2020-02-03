@@ -1,0 +1,11 @@
+upsert {
+  query {
+     v as var(func: has(~properties)) @filter(NOT has(dgraph.type))
+  }
+
+  mutation {
+    set {
+     uid(v) <dgraph.type> "node" .
+    }
+  }
+}
