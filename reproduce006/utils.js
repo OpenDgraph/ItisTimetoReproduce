@@ -162,6 +162,78 @@ const makeDgraphType = function(filePath) {
   ));
 };
 
+const migrateProps = function(filePath) {
+  const data = jsonReader(filePath);
+  const _data = data.filter(e => e.type === "node" && e.properties);
+  let treatd_dat = [];
+
+  _data.forEach(e => {
+    let myUid = `_:Node_${e.id}`;
+    delete e["id"];
+
+    let myProps = e.properties;
+    delete e.properties;
+
+    const toPush = { uid: myUid, ...e, ...myProps };
+
+    treatd_dat.push(toPush);
+  });
+  return treatd_dat;
+};
+
+const relationProps = function(filePath) {
+  const data = jsonReader(filePath);
+  const _data = data.filter(
+    //id 248 138 e.id === "0" &&
+    e => e.type === "relationship" && e.properties
+  );
+  let treatd_dat = [];
+
+  _data.forEach(e => {
+    let startUid = `_:Node_${e.start.id}`;
+    let endUid = `_:Node_${e.end.id}`;
+    delete e["id"];
+    delete e["type"];
+
+    let label = e.label;
+    let myEnd = e.end;
+
+    let facets = {};
+
+    Object.keys(e.properties).forEach(function(key, i) {
+      let alocate = e.properties[key];
+      if (e.properties[key] instanceof Array) {
+        facets[`${label}|${key}`] = `${alocate.join(",")}`;
+      } else {
+        facets[`${label}|${key}`] = e.properties[key];
+      }
+    });
+
+    delete e["label"];
+    delete e.end.id;
+    delete e.end.labels;
+    delete e.properties;
+    delete e.start;
+    delete e.end;
+
+    const toPush = {
+      uid: startUid,
+      ...e,
+      [`${label}`]: [{ uid: endUid, ...myEnd, ...facets }]
+    };
+
+    treatd_dat.push(toPush);
+  });
+  return treatd_dat;
+};
+const writeFile = function(data) {
+  let _data = JSON.stringify(data, null, 2);
+  fs.writeFile("./output.json", _data, err => {
+    if (err) throw err;
+    console.log("Data written to file");
+  });
+};
+
 module.exports = {
   curlQueries,
   curlUpsertBlock,
@@ -169,5 +241,8 @@ module.exports = {
   liveload,
   curlSetSchema,
   findUnique,
-  makeDgraphType
+  makeDgraphType,
+  migrateProps,
+  relationProps,
+  writeFile
 };

@@ -1,9 +1,0 @@
- {
-   nodes(func: has(type))  @filter(eq(type,"node") AND NOT has(migrationDone)){
-     count(uid)
-   }
-   relationships(func: has(type))  @filter(eq(type,"relationship") AND has(dgraph.type) AND NOT has(relationshipDone)){
-     count(uid)
-   }
- }
- 
