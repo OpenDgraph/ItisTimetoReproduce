@@ -1,7 +1,4 @@
 const fs = require("fs");
-const exec = require("child_process").exec;
-const { spawn } = require("child_process");
-
 const { execSync } = require("child_process");
 
 const runcmd = (cmd, args) => {
@@ -25,43 +22,6 @@ const liveload = fileLocation => {
   return runcmd(command);
 };
 
-const curlMutations = (fileLocation, ContentType, addr) => {
-  let fileLocation_in = !fileLocation ? "@./all.json" : fileLocation;
-  let addr_in = !addr ? "http://localhost:8080/mutate?commitNow=true" : addr;
-  let ContentType_in = !ContentType ? "application/json" : ContentType;
-  var command = `curl -sSL  --data-binary '${fileLocation_in}' -X POST -H 'Content-Type: ${ContentType_in}' ${addr_in}`;
-
-  runcmd(command)["data"];
-};
-
-const curlUpsertBlock = (fileLocation, ContentType, addr, raw) => {
-  let fileLocation_in = !fileLocation ? "@./all.json" : fileLocation;
-  let addr_in = !addr ? "http://localhost:8080/mutate?commitNow=true" : addr;
-  let ContentType_in = !ContentType ? "application/rdf" : ContentType;
-  var command = raw
-    ? `curl -sSL -d '${JSON.stringify(
-        fileLocation_in
-      )}' -X POST -H 'Content-Type: ${ContentType_in}' ${addr_in}`
-    : `curl -sSL --data-binary $'${fileLocation_in}' -X POST -H 'Content-Type: ${ContentType_in}' ${addr_in}`;
-  let respo = runcmd(command);
-  console.log("fileLocation_in =>", JSON.stringify(fileLocation_in));
-  console.log("michel", JSON.stringify(respo));
-  return respo;
-};
-
-const curlQueries = (fileLocation, ContentType, addr, raw) => {
-  let fileLocation_in = !fileLocation
-    ? "@./defaults/queryCount.graphql"
-    : fileLocation;
-  let addr_in = !addr ? "http://localhost:8080/query" : addr;
-  let ContentType_in = !ContentType ? "application/graphql+-" : ContentType;
-
-  var command = raw
-    ? `curl -sSL -d '${fileLocation_in}' -X POST -H "Content-Type: ${ContentType_in}" ${addr_in}`
-    : `curl -sSL --data-binary $'${fileLocation_in}' -X POST -H "Content-Type: ${ContentType_in}" ${addr_in}`;
-
-  return runcmd(command)["data"];
-};
 
 const curlSetSchema = (fileLocation, raw, addr) => {
   let fileLocation_in = !fileLocation
@@ -86,46 +46,6 @@ const jsonReader = function(filePath) {
   }
 };
 
-const findUnique = function(filePath) {
-  const data = jsonReader(filePath).filter(e => e.type === "relationship");
-  const _data = data.filter(e => e.properties).map(e => e.label);
-  const _dataNoProps = data.filter(e => !e.properties).map(e => e.label);
-
-  const props = data
-    .filter((e, index) => e.properties)
-    .map(e => {
-      return Object.keys(e.properties);
-    });
-
-  const reduceprops = Object.values(
-    props.reduce((a, c) => {
-      a[c] = c;
-      return a;
-    }, {})
-  );
-  let uniquesprops = [];
-  reduceprops.forEach(e => uniquesprops.push(...e));
-
-  //uniquesprops = uniquesprops.map((e, i) => `${i}_${e} as ${e}`);
-
-  const uniques = Object.values(
-    _data.reduce((a, c) => {
-      a[c] = c;
-      return a;
-    }, {})
-  );
-  const uniquesNoProps = Object.values(
-    _dataNoProps.reduce((a, c) => {
-      a[c] = c;
-      return a;
-    }, {})
-  );
-  return {
-    uniquesLB: uniques,
-    uniquesLB_NoProps: uniquesNoProps,
-    properties: uniquesprops
-  };
-};
 const makeDgraphType = function(filePath) {
   const data = jsonReader(filePath);
   let root = data.map(e => {
