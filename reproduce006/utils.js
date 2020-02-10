@@ -155,12 +155,8 @@ const writeFile = function(data) {
 };
 
 module.exports = {
-  curlQueries,
-  curlUpsertBlock,
-  curlMutations,
   liveload,
   curlSetSchema,
-  findUnique,
   makeDgraphType,
   migrateProps,
   relationProps,
