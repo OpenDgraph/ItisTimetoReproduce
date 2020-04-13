@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -e
+
 PWD=$(pwd)
 PID_Terminal=$$
 
@@ -18,7 +20,8 @@ dataschema=1million.schema
 
 dd if=/dev/random bs=1 count=32 of=enc_key_file
 
-bulk '--encryption_key_file ./enc_key_file' "-f ./datasets/$datafile" "-s ./datasets/$dataschema"
+# zero starts in the same command bellow.
+bulk "--encryption_key_file ./enc_key_file" "-f ./datasets/$datafile" "-s ./datasets/$dataschema"
 
 sleep 8
 
@@ -58,7 +61,8 @@ rm -rf w
 rm -rf zw
 
 echo "... restoring"
-restore --location ./residual
+restore --location ./residual -p ./p -k ./enc_key_file
+sleep 2
 
 echo "####################### End of Restore #########################"
 
