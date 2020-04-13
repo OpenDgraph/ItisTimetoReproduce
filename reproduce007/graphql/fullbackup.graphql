@@ -1,0 +1,8 @@
+mutation {
+  backup(input: {destination: "./residual/", forceFull: true}) {
+    response {
+      message
+      code
+    }
+  }
+}

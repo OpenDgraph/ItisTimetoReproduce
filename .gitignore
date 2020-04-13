@@ -1,6 +1,9 @@
 /dgraph/**
 /traefik/**
 /jaeger/**
+*/residual/**
+datasets
+enc_key_file
 node_modules
 .DS_Store
 reproduce005/dgraph/**
