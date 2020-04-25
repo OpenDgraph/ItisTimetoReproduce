@@ -1,3 +1,6 @@
+#ignore Dgraph binary
+dgraph
+
 /dgraph/**
 /traefik/**
 /jaeger/**
